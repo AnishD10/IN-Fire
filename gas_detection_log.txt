@@ -55,3 +55,15 @@
 {"message":"gas is now in control","topic":"LPG","timestamp":"2026-01-09T09:16:49.116Z","sensorReading":0,"gasDetected":false,"severity":"normal"}
 {"message":"gas detected","topic":"LPG","timestamp":"2026-01-09T09:17:26.135Z","sensorReading":0,"gasDetected":true,"severity":"high"}
 {"message":"gas is now in control","topic":"LPG","timestamp":"2026-01-09T09:17:35.890Z","sensorReading":0,"gasDetected":false,"severity":"normal"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:44:37.686Z","sensorReading":0,"gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:44:42.599Z","sensorReading":0,"gasDetected":true,"severity":"high"}
+{"message":"gas is now in control","topic":"LPG","timestamp":"2026-01-09T09:44:55.366Z","sensorReading":0,"gasDetected":false,"severity":"normal"}
+{"message":"hi","topic":"LPG","timestamp":"2026-01-09T09:49:05.107Z","sensorReading":0,"gasDetected":false,"severity":"normal"}
+{"message":"chalirako xa hai\n","topic":"LPG","timestamp":"2026-01-09T09:49:23.178Z","sensorReading":0,"gasDetected":false,"severity":"normal"}
+{"message":"chalirako xa hai\nhi","topic":"LPG","timestamp":"2026-01-09T09:55:35.768Z","sensorReading":0,"gasDetected":false,"severity":"normal"}
+{"message":"...","topic":"LPG","timestamp":"2026-01-09T09:56:16.681Z","sensorReading":0,"gasDetected":false,"severity":"normal"}
+{"message":"Evena an explicit pledge is twisted and turned to suit their own purpose","topic":"LPG","timestamp":"2026-01-09T09:57:38.546Z","sensorReading":0,"gasDetected":false,"severity":"normal"}
+{"message":"to do is to be , to be is to do","topic":"LPG","timestamp":"2026-01-09T09:59:43.691Z","sensorReading":0,"gasDetected":false,"severity":"normal"}
+{"message":"to do is to be , to be is to do","topic":"LPG","timestamp":"2026-01-09T10:01:07.341Z","sensorReading":0,"gasDetected":false,"severity":"normal"}
+{"message":"to do is to be , to be is to do","topic":"LPG","timestamp":"2026-01-09T10:01:53.806Z","sensorReading":0,"gasDetected":false,"severity":"normal"}
+{"message":"to do is to be , to be is to do","topic":"LPG","timestamp":"2026-01-09T10:01:57.936Z","sensorReading":0,"gasDetected":false,"severity":"normal"}

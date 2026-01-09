@@ -5,6 +5,7 @@ import { Flame, Wifi, WifiOff, AlertTriangle, CheckCircle, Bell, Zap, Wind, Volu
 function App() {
   const [isConnected, setIsConnected] = useState(false);
   const [messages, setMessages] = useState([]);
+  const [lastMessage, setLastMessage] = useState(null);
   const [gasDetected, setGasDetected] = useState(false);
   const [lastUpdate, setLastUpdate] = useState(null);
   const [sensorReading, setSensorReading] = useState(0);
@@ -65,10 +66,12 @@ function App() {
       }
       
       // Add to messages list (keep last 10)
-      setMessages(prev => [{
+      const entry = {
         id: Date.now(),
         ...data
-      }, ...prev].slice(0, 10));
+      };
+      setLastMessage(entry);
+      setMessages(prev => [entry, ...prev].slice(0, 10));
     });
 
     return () => {
@@ -326,11 +329,36 @@ function App() {
             
             <div className="space-y-3 max-h-[400px] overflow-y-auto">
               {messages.length === 0 ? (
-                <div className="text-center py-12 text-gray-400">
-                  <Bell className="w-16 h-16 mx-auto mb-4 opacity-30" />
-                  <p>Waiting for messages from ESP32...</p>
-                  <p className="text-sm mt-2">Topic: <code className="bg-slate-700 px-2 py-1 rounded">LPG</code></p>
-                </div>
+                lastMessage ? (
+                  <div 
+                    className={`p-4 rounded-lg border-l-4 ${
+                      lastMessage.gasDetected
+                        ? 'bg-red-900/20 border-red-500'
+                        : 'bg-blue-900/20 border-blue-500'
+                    }`}
+                  >
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <p className="text-white font-semibold text-lg">
+                          {lastMessage.message}
+                        </p>
+                        <p className="text-gray-400 text-sm mt-1">
+                          PPM: {lastMessage.sensorReading || 'N/A'}
+                        </p>
+                      </div>
+                      <span className="text-gray-500 text-xs">
+                        {lastMessage.timestamp.toLocaleTimeString()}
+                      </span>
+                    </div>
+                    <p className="text-xs text-gray-500 mt-2">Most recent received</p>
+                  </div>
+                ) : (
+                  <div className="text-center py-12 text-gray-400">
+                    <Bell className="w-16 h-16 mx-auto mb-4 opacity-30" />
+                    <p>Waiting for messages from ESP32...</p>
+                    <p className="text-sm mt-2">Topic: <code className="bg-slate-700 px-2 py-1 rounded">LPG</code></p>
+                  </div>
+                )
               ) : (
                 messages.map((msg) => (
                   <div 
