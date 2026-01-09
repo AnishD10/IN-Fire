@@ -5,7 +5,7 @@ module.exports = {
   "debugMaxLength": 1000,
   "flowFile": "flows.json",
   "flowFilePretty": true,
-  "credentialSecret": false,
+  "credentialSecret": true,
   "userDir": "./node-red-data/",
   "httpAdminRoot": "/admin",
   "httpNodeRoot": "/",

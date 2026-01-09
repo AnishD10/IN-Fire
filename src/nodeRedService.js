@@ -34,21 +34,29 @@ class NodeRedService {
 
         this.ws.onmessage = (event) => {
           try {
+            console.log('Raw WebSocket data:', event.data);
             const data = JSON.parse(event.data);
-            console.log('Message from Node-RED:', data);
+            console.log('Parsed data from Node-RED:', data);
+            
+            // Handle both the processed data format and raw message format
+            const message = data.message || data.payload || event.data;
+            const sensorReading = data.sensorReading || 
+                                 (typeof message === 'string' ? parseInt(message.match(/\d+/)?.[0]) : 0) || 0;
             
             // Notify all subscribers
             this.messageCallbacks.forEach(callback => {
               callback({
                 topic: data.topic || 'LPG',
-                message: data.message,
-                timestamp: new Date(data.timestamp),
-                gasDetected: data.gasDetected,
-                severity: data.severity
+                message: message,
+                timestamp: data.timestamp ? new Date(data.timestamp) : new Date(),
+                gasDetected: data.gasDetected || false,
+                severity: data.severity || 'normal',
+                sensorReading: sensorReading
               });
             });
           } catch (err) {
             console.error('Error parsing message:', err);
+            console.error('Raw data was:', event.data);
           }
         };
 

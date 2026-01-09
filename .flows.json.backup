@@ -7,26 +7,6 @@
         "info": ""
     },
     {
-        "id": "tls_config",
-        "type": "tls-config",
-        "name": "HiveMQ TLS",
-        "cert": "",
-        "key": "",
-        "ca": "",
-        "certname": "",
-        "keyname": "",
-        "caname": "",
-        "servername": "",
-        "verifyservercert": true,
-        "alpnprotocol": ""
-    },
-    {
-        "id": "ws_server",
-        "type": "websocket-listener",
-        "path": "/gas-data",
-        "wholemsg": "false"
-    },
-    {
         "id": "hivemq_broker",
         "type": "mqtt-broker",
         "name": "HiveMQ Cloud",
@@ -39,7 +19,6 @@
         "protocolVersion": "4",
         "keepalive": "60",
         "cleansession": true,
-        "autoUnsubscribe": true,
         "birthTopic": "",
         "birthQos": "0",
         "birthPayload": "",
@@ -54,6 +33,20 @@
         "willMsg": {},
         "userProps": "",
         "sessionExpiry": ""
+    },
+    {
+        "id": "tls_config",
+        "type": "tls-config",
+        "name": "HiveMQ TLS",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "",
+        "servername": "",
+        "verifyservercert": true,
+        "alpnprotocol": ""
     },
     {
         "id": "mqtt_subscriber",
@@ -81,7 +74,7 @@
         "type": "function",
         "z": "mqtt_in",
         "name": "Process Gas Data",
-        "func": "// Extract message\nconst message = msg.payload;\n\n// Try to extract sensor reading (PPM value) from message\nlet sensorReading = 0;\nif (typeof message === 'string') {\n    const match = message.match(/(\\d+)/);\n    if (match) {\n        sensorReading = parseInt(match[1]);\n    }\n}\n\n// Create processed data\nconst processedData = {\n    message: message,\n    topic: msg.topic,\n    timestamp: new Date().toISOString(),\n    sensorReading: sensorReading,\n    gasDetected: message.toLowerCase().includes('gas') && message.toLowerCase().includes('detected'),\n    severity: message.toLowerCase().includes('detected') ? 'high' : 'normal'\n};\n\nmsg.payload = processedData;\nreturn msg;",
+        "func": "// Extract message\nconst message = msg.payload;\n\n// Create processed data\nconst processedData = {\n    message: message,\n    topic: msg.topic,\n    timestamp: new Date().toISOString(),\n    gasDetected: message.toLowerCase().includes('gas') && message.toLowerCase().includes('detected'),\n    severity: message.toLowerCase().includes('detected') ? 'high' : 'normal'\n};\n\nmsg.payload = processedData;\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -91,28 +84,10 @@
         "y": 120,
         "wires": [
             [
-                "debug_websocket",
                 "websocket_out",
                 "log_to_file"
             ]
         ]
-    },
-    {
-        "id": "debug_websocket",
-        "type": "debug",
-        "z": "mqtt_in",
-        "name": "Debug WebSocket Data",
-        "active": true,
-        "tosidebar": true,
-        "console": true,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 570,
-        "y": 60,
-        "wires": []
     },
     {
         "id": "debug_node",
@@ -141,6 +116,12 @@
         "x": 570,
         "y": 120,
         "wires": []
+    },
+    {
+        "id": "ws_server",
+        "type": "websocket-listener",
+        "path": "/gas-data",
+        "wholemsg": "true"
     },
     {
         "id": "log_to_file",

@@ -1,0 +1,57 @@
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:04:29.924Z","gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:04:34.976Z","gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:04:39.993Z","gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:04:44.913Z","gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:04:49.925Z","gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:04:54.943Z","gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:04:59.907Z","gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:05:04.982Z","gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:08:30.635Z","gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:08:35.518Z","gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:08:40.540Z","gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:08:45.547Z","gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:08:50.583Z","gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:08:55.582Z","gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:09:00.545Z","gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:09:05.621Z","gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:09:10.638Z","gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:09:15.668Z","gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:09:20.721Z","gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:09:25.692Z","gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:09:30.605Z","gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:09:35.728Z","gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:13:05.341Z","sensorReading":0,"gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:13:10.353Z","sensorReading":0,"gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:13:15.269Z","sensorReading":0,"gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:13:20.296Z","sensorReading":0,"gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:13:25.413Z","sensorReading":0,"gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:13:30.321Z","sensorReading":0,"gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:13:35.339Z","sensorReading":0,"gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:13:40.364Z","sensorReading":0,"gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:13:45.316Z","sensorReading":0,"gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:13:50.395Z","sensorReading":0,"gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:13:55.409Z","sensorReading":0,"gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:14:00.436Z","sensorReading":0,"gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:14:05.347Z","sensorReading":0,"gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:14:10.359Z","sensorReading":0,"gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:14:15.394Z","sensorReading":0,"gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:14:20.404Z","sensorReading":0,"gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:14:25.461Z","sensorReading":0,"gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:14:30.444Z","sensorReading":0,"gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:14:35.558Z","sensorReading":0,"gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:14:40.571Z","sensorReading":0,"gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:14:45.482Z","sensorReading":0,"gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:14:50.524Z","sensorReading":0,"gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:14:55.518Z","sensorReading":0,"gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:15:10.577Z","sensorReading":0,"gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:15:15.489Z","sensorReading":0,"gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:15:20.503Z","sensorReading":0,"gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:15:25.521Z","sensorReading":0,"gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:15:30.538Z","sensorReading":0,"gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:15:35.469Z","sensorReading":0,"gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:15:40.476Z","sensorReading":0,"gasDetected":true,"severity":"high"}
+{"message":"GAS is DETECTED","topic":"LPG","timestamp":"2026-01-09T09:15:45.613Z","sensorReading":0,"gasDetected":true,"severity":"high"}
+{"message":"gas is now in control","topic":"LPG","timestamp":"2026-01-09T09:16:45.830Z","sensorReading":0,"gasDetected":false,"severity":"normal"}
+{"message":"gas is now in control","topic":"LPG","timestamp":"2026-01-09T09:16:49.116Z","sensorReading":0,"gasDetected":false,"severity":"normal"}
+{"message":"gas detected","topic":"LPG","timestamp":"2026-01-09T09:17:26.135Z","sensorReading":0,"gasDetected":true,"severity":"high"}
+{"message":"gas is now in control","topic":"LPG","timestamp":"2026-01-09T09:17:35.890Z","sensorReading":0,"gasDetected":false,"severity":"normal"}
