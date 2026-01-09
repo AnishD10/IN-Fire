@@ -5,13 +5,13 @@ import { Flame, Wifi, WifiOff, AlertTriangle, CheckCircle, Bell, Zap, Wind, Volu
 function App() {
   const [isConnected, setIsConnected] = useState(false);
   const [messages, setMessages] = useState([]);
-  const [lastMessage, setLastMessage] = useState(null);
   const [gasDetected, setGasDetected] = useState(false);
   const [lastUpdate, setLastUpdate] = useState(null);
   const [sensorReading, setSensorReading] = useState(0);
   const [threshold, setThreshold] = useState(300);
   const [lastThresholdTime, setLastThresholdTime] = useState(null);
   const [sensorTestMode, setSensorTestMode] = useState(false);
+  const [lastMessage, setLastMessage] = useState(null);
   
   // Component Status States
   const [components, setComponents] = useState({
@@ -22,6 +22,33 @@ function App() {
     mq2Sensor: { active: false, label: 'MQ2 Sensor' },
     esp32: { active: false, label: 'ESP32 Microcontroller' }
   });
+
+  // Load persisted messages on first render
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('lpg_messages');
+      const savedLast = localStorage.getItem('lpg_last_message');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        const restored = parsed.map(m => ({
+          ...m,
+          timestamp: new Date(m.timestamp)
+        }));
+        setMessages(restored);
+        if (restored.length > 0) {
+          setLastMessage(restored[0]);
+        } else if (savedLast) {
+          const lm = JSON.parse(savedLast);
+          setLastMessage({ ...lm, timestamp: new Date(lm.timestamp) });
+        }
+      } else if (savedLast) {
+        const lm = JSON.parse(savedLast);
+        setLastMessage({ ...lm, timestamp: new Date(lm.timestamp) });
+      }
+    } catch (e) {
+      console.error('Failed to restore messages', e);
+    }
+  }, []);
 
   useEffect(() => {
     // Connect to Node-RED WebSocket
@@ -71,7 +98,16 @@ function App() {
         ...data
       };
       setLastMessage(entry);
-      setMessages(prev => [entry, ...prev].slice(0, 10));
+      setMessages(prev => {
+        const next = [entry, ...prev].slice(0, 10);
+        try {
+          localStorage.setItem('lpg_messages', JSON.stringify(next));
+          localStorage.setItem('lpg_last_message', JSON.stringify(entry));
+        } catch (e) {
+          console.error('Failed to persist messages', e);
+        }
+        return next;
+      });
     });
 
     return () => {
