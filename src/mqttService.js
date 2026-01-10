@@ -5,7 +5,8 @@ class MQTTService {
   constructor() {
     this.client = null;
     this.isConnected = false;
-    this.messageCallbacks = [];
+    this.sensorCallbacks = [];      // For sensor data (gas value & status)
+    this.messageCallbacks = [];     // For log messages
     this.gasValue = 0;
     this.gasStatus = 'NORMAL';
   }
@@ -20,12 +21,16 @@ class MQTTService {
         console.log('✓ Connected to HiveMQ Cloud (Direct ESP32 Feed)!');
         this.isConnected = true;
         
-        // Subscribe to ESP32 data topics
-        this.client.subscribe([MQTT_CONFIG.topicGasValue, MQTT_CONFIG.topicGasStatus], (err) => {
+        // Subscribe to ALL topics: sensor data + messages
+        this.client.subscribe([
+          MQTT_CONFIG.topicGasValue, 
+          MQTT_CONFIG.topicGasStatus,
+          MQTT_CONFIG.topicMessages
+        ], (err) => {
           if (err) {
             console.error('Failed to subscribe:', err);
           } else {
-            console.log(`✓ Subscribed to ESP32 topics: ${MQTT_CONFIG.topicGasValue} & ${MQTT_CONFIG.topicGasStatus}`);
+            console.log(`✓ Subscribed to: ${MQTT_CONFIG.topicGasValue}, ${MQTT_CONFIG.topicGasStatus}, ${MQTT_CONFIG.topicMessages}`);
           }
         });
         
@@ -42,26 +47,26 @@ class MQTTService {
         const messageStr = message.toString();
         console.log(`Message from ${topic}:`, messageStr);
         
-        // Parse ESP32 data based on topic
+        // Handle sensor data topics
         if (topic === MQTT_CONFIG.topicGasValue) {
           this.gasValue = parseInt(messageStr) || 0;
+          this.publishSensorData();
         } else if (topic === MQTT_CONFIG.topicGasStatus) {
           this.gasStatus = messageStr;
+          this.publishSensorData();
+        } 
+        // Handle message log topic
+        else if (topic === MQTT_CONFIG.topicMessages) {
+          const logMessage = {
+            text: messageStr,
+            timestamp: new Date(),
+            source: 'ESP32'
+          };
+          
+          this.messageCallbacks.forEach(callback => {
+            callback(logMessage);
+          });
         }
-        
-        // Notify all subscribers with processed data
-        const processedData = {
-          sensorReading: this.gasValue,
-          gasDetected: this.gasStatus === 'GAS_DETECTED',
-          status: this.gasStatus,
-          message: this.gasStatus === 'GAS_DETECTED' ? `⚠️ GAS DETECTED! (${this.gasValue} ppm)` : `✓ Safe (${this.gasValue} ppm)`,
-          topic,
-          timestamp: new Date()
-        };
-        
-        this.messageCallbacks.forEach(callback => {
-          callback(processedData);
-        });
       });
 
       this.client.on('disconnect', () => {
@@ -73,6 +78,27 @@ class MQTTService {
         console.log('Reconnecting to MQTT...');
       });
     });
+  }
+
+  // Publish sensor data to subscribers
+  publishSensorData() {
+    const processedData = {
+      sensorReading: this.gasValue,
+      gasDetected: this.gasStatus === 'GAS_DETECTED',
+      status: this.gasStatus,
+      timestamp: new Date()
+    };
+    
+    this.sensorCallbacks.forEach(callback => {
+      callback(processedData);
+    });
+  }
+
+  onSensor(callback) {
+    this.sensorCallbacks.push(callback);
+    return () => {
+      this.sensorCallbacks = this.sensorCallbacks.filter(cb => cb !== callback);
+    };
   }
 
   onMessage(callback) {

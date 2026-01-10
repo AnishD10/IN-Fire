@@ -62,11 +62,10 @@ function App() {
         setIsConnected(false);
       });
 
-    // Listen for messages from ESP32 via MQTT
-    const unsubscribe = mqttService.onMessage((data) => {
-      console.log('Received from ESP32:', data);
+    // Listen for sensor data from ESP32 (gas value & status)
+    const unsubscribeSensor = mqttService.onSensor((data) => {
+      console.log('Received sensor data:', data);
       
-      // Data is already processed by mqttService
       setSensorReading(data.sensorReading);
       setGasDetected(data.gasDetected);
       setLastUpdate(data.timestamp);
@@ -88,11 +87,17 @@ function App() {
           esp32: { ...prev.esp32, active: true }
         }));
       }
+    });
+
+    // Listen for messages from ESP32 via LPG/messages topic
+    const unsubscribeMessages = mqttService.onMessage((logMessage) => {
+      console.log('Received log message:', logMessage);
       
       // Add to messages list (keep last 10)
       const entry = {
         id: Date.now(),
-        ...data
+        message: logMessage.text,
+        timestamp: logMessage.timestamp
       };
       setLastMessage(entry);
       
@@ -109,7 +114,8 @@ function App() {
     });
 
     return () => {
-      unsubscribe();
+      unsubscribeSensor();
+      unsubscribeMessages();
       mqttService.disconnect();
     };
   }, [gasDetected, sensorTestMode]);

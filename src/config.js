@@ -15,5 +15,6 @@ export const MQTT_CONFIG = {
   
   // MQTT Topics (matching ESP32 code)
   topicGasValue: 'LPG/gas/value',      // Gas sensor raw value from ESP32
-  topicGasStatus: 'LPG/gas/status'     // Gas status (NORMAL or GAS_DETECTED)
+  topicGasStatus: 'LPG/gas/status',    // Gas status (NORMAL or GAS_DETECTED)
+  topicMessages: 'LPG/messages'        // Live message log from ESP32
 };
