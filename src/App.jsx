@@ -8,7 +8,7 @@ function App() {
   const [gasDetected, setGasDetected] = useState(false);
   const [lastUpdate, setLastUpdate] = useState(null);
   const [sensorReading, setSensorReading] = useState(0);
-  const [threshold, setThreshold] = useState(300);
+  const [threshold, setThreshold] = useState(900);
   const [lastThresholdTime, setLastThresholdTime] = useState(null);
   const [sensorTestMode, setSensorTestMode] = useState(false);
   const [lastMessage, setLastMessage] = useState(null);
