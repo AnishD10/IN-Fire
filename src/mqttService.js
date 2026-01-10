@@ -18,12 +18,12 @@ class MQTTService {
         console.log('✓ Connected to HiveMQ Cloud!');
         this.isConnected = true;
         
-        // Subscribe to LPG topic
-        this.client.subscribe(MQTT_CONFIG.topic, (err) => {
+        // Subscribe to both sensor data and last message topics
+        this.client.subscribe([MQTT_CONFIG.topic, MQTT_CONFIG.lastMessageTopic], (err) => {
           if (err) {
             console.error('Failed to subscribe:', err);
           } else {
-            console.log(`✓ Subscribed to topic: ${MQTT_CONFIG.topic}`);
+            console.log(`✓ Subscribed to topics: ${MQTT_CONFIG.topic} & ${MQTT_CONFIG.lastMessageTopic}`);
           }
         });
         
@@ -59,6 +59,20 @@ class MQTTService {
         console.log('Reconnecting...');
       });
     });
+  }
+
+  // Publish last message with retain flag so all devices get it
+  publishLastMessage(messageData) {
+    if (this.client && this.isConnected) {
+      const payload = JSON.stringify(messageData);
+      this.client.publish(MQTT_CONFIG.lastMessageTopic, payload, { retain: true }, (err) => {
+        if (err) {
+          console.error('Failed to publish last message:', err);
+        } else {
+          console.log('✓ Last message published and retained');
+        }
+      });
+    }
   }
 
   onMessage(callback) {

@@ -1,3 +1,5 @@
+import { NODERED_CONFIG } from './config';
+
 class NodeRedService {
   constructor() {
     this.ws = null;
@@ -9,9 +11,10 @@ class NodeRedService {
   connect() {
     return new Promise((resolve, reject) => {
       console.log('Connecting to Node-RED WebSocket...');
+      console.log('Node-RED URL:', NODERED_CONFIG.serverUrl);
       
       try {
-        this.ws = new WebSocket('ws://localhost:1880/gas-data');
+        this.ws = new WebSocket(NODERED_CONFIG.serverUrl);
 
         this.ws.onopen = () => {
           console.log('✓ Connected to Node-RED!');
@@ -64,12 +67,12 @@ class NodeRedService {
           console.log('Disconnected from Node-RED');
           this.isConnected = false;
           
-          // Attempt to reconnect every 5 seconds
+          // Attempt to reconnect using configured interval
           if (!this.reconnectInterval) {
             this.reconnectInterval = setInterval(() => {
-              console.log('Attempting to reconnect...');
+              console.log('Attempting to reconnect to Node-RED...');
               this.connect().catch(() => {});
-            }, 5000);
+            }, NODERED_CONFIG.reconnectInterval);
           }
         };
       } catch (error) {

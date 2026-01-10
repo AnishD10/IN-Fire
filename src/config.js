@@ -12,6 +12,15 @@ export const MQTT_CONFIG = {
     connectTimeout: 30 * 1000,
   },
   
-  // MQTT Topic (from your Thonny code)
-  topic: 'LPG'  // Your ESP32 publishes to this topic
+  // MQTT Topics
+  topic: 'LPG',  // Your ESP32 publishes sensor data to this topic
+  lastMessageTopic: 'LPG/last_message'  // Retained topic for last message across all devices
+};
+
+// Node-RED Server Configuration
+// Using Ngrok for public access (use wss:// not ws:// for HTTPS)
+export const NODERED_CONFIG = {
+  serverUrl: import.meta.env.VITE_NODERED_URL || 'wss://francoise-sapotaceous-corrie.ngrok-free.dev/gas-data',
+  reconnectInterval: 5000,
+  reconnectMaxAttempts: 10
 };

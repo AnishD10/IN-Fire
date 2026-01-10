@@ -70,3 +70,9 @@
 {"message":"to do is to be , to be is to do","topic":"LPG","timestamp":"2026-01-09T10:03:10.024Z","sensorReading":0,"gasDetected":false,"severity":"normal"}
 {"message":"to do is to be , to be is to do","topic":"LPG","timestamp":"2026-01-09T10:03:42.206Z","sensorReading":0,"gasDetected":false,"severity":"normal"}
 {"message":"to do is to be , to be is to do","topic":"LPG","timestamp":"2026-01-09T10:09:55.112Z","sensorReading":0,"gasDetected":false,"severity":"normal"}
+{"message":"Aba pani chalena bhane, pahad gayera naya zindagi suru grxu ","topic":"LPG","timestamp":"2026-01-09T10:13:41.633Z","sensorReading":0,"gasDetected":false,"severity":"normal"}
+{"message":"Aba pani chalena bhane, pahad gayera naya zindagi suru grxu ","topic":"LPG","timestamp":"2026-01-09T10:14:29.203Z","sensorReading":0,"gasDetected":false,"severity":"normal"}
+{"message":"Aba pani chalena bhane, pahad gayera naya zindagi suru grxu ","topic":"LPG","timestamp":"2026-01-10T08:02:14.134Z","sensorReading":0,"gasDetected":false,"severity":"normal"}
+{"message":"HI","topic":"LPG","timestamp":"2026-01-10T08:03:27.248Z","sensorReading":0,"gasDetected":false,"severity":"normal"}
+{"message":"Gas Detected","topic":"LPG","timestamp":"2026-01-10T08:03:45.482Z","sensorReading":0,"gasDetected":true,"severity":"high"}
+{"message":"Gas Controlled","topic":"LPG","timestamp":"2026-01-10T08:04:10.497Z","sensorReading":0,"gasDetected":false,"severity":"normal"}

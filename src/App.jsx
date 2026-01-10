@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { nodeRedService } from './nodeRedService';
+import { mqttService } from './mqttService';
 import { Flame, Wifi, WifiOff, AlertTriangle, CheckCircle, Bell, Zap, Wind, Volume2, Gauge } from 'lucide-react';
 
 function App() {
@@ -61,6 +62,15 @@ function App() {
         setIsConnected(false);
       });
 
+    // Connect to MQTT for publishing last message across devices
+    mqttService.connect()
+      .then(() => {
+        console.log('✓ MQTT Connected for shared last message');
+      })
+      .catch((error) => {
+        console.error('MQTT connection failed:', error);
+      });
+
     // Listen for messages from Node-RED
     const unsubscribe = nodeRedService.onMessage((data) => {
       console.log('Received:', data);
@@ -98,6 +108,10 @@ function App() {
         ...data
       };
       setLastMessage(entry);
+      
+      // Publish last message to MQTT so ALL devices receive it (with retain flag)
+      mqttService.publishLastMessage(entry);
+      
       setMessages(prev => {
         const next = [entry, ...prev].slice(0, 10);
         try {
@@ -113,6 +127,7 @@ function App() {
     return () => {
       unsubscribe();
       nodeRedService.disconnect();
+      mqttService.disconnect();
     };
   }, [gasDetected, threshold, sensorTestMode]);
 
