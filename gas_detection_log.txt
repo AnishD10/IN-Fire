@@ -76,3 +76,7 @@
 {"message":"HI","topic":"LPG","timestamp":"2026-01-10T08:03:27.248Z","sensorReading":0,"gasDetected":false,"severity":"normal"}
 {"message":"Gas Detected","topic":"LPG","timestamp":"2026-01-10T08:03:45.482Z","sensorReading":0,"gasDetected":true,"severity":"high"}
 {"message":"Gas Controlled","topic":"LPG","timestamp":"2026-01-10T08:04:10.497Z","sensorReading":0,"gasDetected":false,"severity":"normal"}
+{"message":"hi\n","topic":"LPG","timestamp":"2026-01-10T08:33:44.337Z","sensorReading":0,"gasDetected":false,"severity":"normal"}
+{"message":"Aba pani chalena bhane, pahad gayera naya zindagi suru grxu ","topic":"LPG","timestamp":"2026-01-10T08:40:13.097Z","sensorReading":0,"gasDetected":false,"severity":"normal"}
+{"message":"Do people with hydrophobia drink water?","topic":"LPG","timestamp":"2026-01-10T08:41:17.905Z","sensorReading":0,"gasDetected":false,"severity":"normal"}
+{"message":"Aba pani chalena bhane, pahad gayera naya zindagi suru grxu ","topic":"LPG","timestamp":"2026-01-10T09:11:35.620Z","sensorReading":0,"gasDetected":false,"severity":"normal"}

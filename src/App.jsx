@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { nodeRedService } from './nodeRedService';
 import { mqttService } from './mqttService';
 import { Flame, Wifi, WifiOff, AlertTriangle, CheckCircle, Bell, Zap, Wind, Volume2, Gauge } from 'lucide-react';
 
@@ -52,40 +51,28 @@ function App() {
   }, []);
 
   useEffect(() => {
-    // Connect to Node-RED WebSocket
-    nodeRedService.connect()
+    // Connect to MQTT (direct ESP32 feed from HiveMQ Cloud)
+    mqttService.connect()
       .then(() => {
         setIsConnected(true);
+        console.log('✓ Connected to HiveMQ Cloud (Direct ESP32 Feed)');
       })
       .catch((error) => {
         console.error('Connection failed:', error);
         setIsConnected(false);
       });
 
-    // Connect to MQTT for publishing last message across devices
-    mqttService.connect()
-      .then(() => {
-        console.log('✓ MQTT Connected for shared last message');
-      })
-      .catch((error) => {
-        console.error('MQTT connection failed:', error);
-      });
-
-    // Listen for messages from Node-RED
-    const unsubscribe = nodeRedService.onMessage((data) => {
-      console.log('Received:', data);
+    // Listen for messages from ESP32 via MQTT
+    const unsubscribe = mqttService.onMessage((data) => {
+      console.log('Received from ESP32:', data);
       
-      // Extract sensor reading (PPM value)
-      const reading = data.sensorReading || parseInt(data.message.match(/\d+/)?.[0]) || 0;
-      setSensorReading(reading);
-      
-      // Use processed data from Node-RED
-      const isDanger = data.gasDetected || reading > threshold;
-      setGasDetected(isDanger);
+      // Data is already processed by mqttService
+      setSensorReading(data.sensorReading);
+      setGasDetected(data.gasDetected);
       setLastUpdate(data.timestamp);
       
       // Track when gas exceeds threshold
-      if (isDanger && !gasDetected) {
+      if (data.gasDetected && !gasDetected) {
         setLastThresholdTime(new Date());
       }
       
@@ -93,10 +80,10 @@ function App() {
       if (!sensorTestMode) {
         setComponents(prev => ({
           ...prev,
-          ledGreen: { ...prev.ledGreen, active: !isDanger },
-          ledRed: { ...prev.ledRed, active: isDanger },
-          buzzer: { ...prev.buzzer, active: isDanger },
-          exhaustFan: { ...prev.exhaustFan, active: isDanger },
+          ledGreen: { ...prev.ledGreen, active: !data.gasDetected },
+          ledRed: { ...prev.ledRed, active: data.gasDetected },
+          buzzer: { ...prev.buzzer, active: data.gasDetected },
+          exhaustFan: { ...prev.exhaustFan, active: data.gasDetected },
           mq2Sensor: { ...prev.mq2Sensor, active: true },
           esp32: { ...prev.esp32, active: true }
         }));
@@ -108,9 +95,6 @@ function App() {
         ...data
       };
       setLastMessage(entry);
-      
-      // Publish last message to MQTT so ALL devices receive it (with retain flag)
-      mqttService.publishLastMessage(entry);
       
       setMessages(prev => {
         const next = [entry, ...prev].slice(0, 10);
@@ -126,10 +110,9 @@ function App() {
 
     return () => {
       unsubscribe();
-      nodeRedService.disconnect();
       mqttService.disconnect();
     };
-  }, [gasDetected, threshold, sensorTestMode]);
+  }, [gasDetected, sensorTestMode]);
 
   return (
     <div className="min-h-screen p-6">
@@ -146,7 +129,7 @@ function App() {
                   <h1 className="text-3xl font-bold text-white">
                     LPG Gas Detection System
                   </h1>
-                  <p className="text-blue-200">Real-time Monitoring via Node-RED</p>
+                  <p className="text-blue-200">Real-time Monitoring via HiveMQ Cloud (Direct ESP32)</p>
                 </div>
               </div>
               

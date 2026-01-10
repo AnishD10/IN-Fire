@@ -6,6 +6,8 @@ class MQTTService {
     this.client = null;
     this.isConnected = false;
     this.messageCallbacks = [];
+    this.gasValue = 0;
+    this.gasStatus = 'NORMAL';
   }
 
   connect() {
@@ -15,15 +17,15 @@ class MQTTService {
       this.client = mqtt.connect(MQTT_CONFIG.brokerUrl, MQTT_CONFIG.options);
 
       this.client.on('connect', () => {
-        console.log('✓ Connected to HiveMQ Cloud!');
+        console.log('✓ Connected to HiveMQ Cloud (Direct ESP32 Feed)!');
         this.isConnected = true;
         
-        // Subscribe to both sensor data and last message topics
-        this.client.subscribe([MQTT_CONFIG.topic, MQTT_CONFIG.lastMessageTopic], (err) => {
+        // Subscribe to ESP32 data topics
+        this.client.subscribe([MQTT_CONFIG.topicGasValue, MQTT_CONFIG.topicGasStatus], (err) => {
           if (err) {
             console.error('Failed to subscribe:', err);
           } else {
-            console.log(`✓ Subscribed to topics: ${MQTT_CONFIG.topic} & ${MQTT_CONFIG.lastMessageTopic}`);
+            console.log(`✓ Subscribed to ESP32 topics: ${MQTT_CONFIG.topicGasValue} & ${MQTT_CONFIG.topicGasStatus}`);
           }
         });
         
@@ -40,13 +42,25 @@ class MQTTService {
         const messageStr = message.toString();
         console.log(`Message from ${topic}:`, messageStr);
         
-        // Notify all subscribers
+        // Parse ESP32 data based on topic
+        if (topic === MQTT_CONFIG.topicGasValue) {
+          this.gasValue = parseInt(messageStr) || 0;
+        } else if (topic === MQTT_CONFIG.topicGasStatus) {
+          this.gasStatus = messageStr;
+        }
+        
+        // Notify all subscribers with processed data
+        const processedData = {
+          sensorReading: this.gasValue,
+          gasDetected: this.gasStatus === 'GAS_DETECTED',
+          status: this.gasStatus,
+          message: this.gasStatus === 'GAS_DETECTED' ? `⚠️ GAS DETECTED! (${this.gasValue} ppm)` : `✓ Safe (${this.gasValue} ppm)`,
+          topic,
+          timestamp: new Date()
+        };
+        
         this.messageCallbacks.forEach(callback => {
-          callback({
-            topic,
-            message: messageStr,
-            timestamp: new Date()
-          });
+          callback(processedData);
         });
       });
 
@@ -56,23 +70,9 @@ class MQTTService {
       });
 
       this.client.on('reconnect', () => {
-        console.log('Reconnecting...');
+        console.log('Reconnecting to MQTT...');
       });
     });
-  }
-
-  // Publish last message with retain flag so all devices get it
-  publishLastMessage(messageData) {
-    if (this.client && this.isConnected) {
-      const payload = JSON.stringify(messageData);
-      this.client.publish(MQTT_CONFIG.lastMessageTopic, payload, { retain: true }, (err) => {
-        if (err) {
-          console.error('Failed to publish last message:', err);
-        } else {
-          console.log('✓ Last message published and retained');
-        }
-      });
-    }
   }
 
   onMessage(callback) {
