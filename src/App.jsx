@@ -97,7 +97,9 @@ function App() {
       const entry = {
         id: Date.now(),
         message: logMessage.text,
-        timestamp: logMessage.timestamp
+        timestamp: logMessage.timestamp,
+        gasDetected: logMessage.gasDetected,
+        sensorReading: logMessage.sensorReading
       };
       setLastMessage(entry);
       

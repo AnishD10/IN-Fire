@@ -92,6 +92,21 @@ class MQTTService {
     this.sensorCallbacks.forEach(callback => {
       callback(processedData);
     });
+
+    // Also publish as a message for live messages list
+    const statusMessage = {
+      text: this.gasStatus === 'GAS_DETECTED' 
+        ? `⚠️ GAS DETECTED - PPM: ${this.gasValue}` 
+        : `✓ Safe - PPM: ${this.gasValue}`,
+      timestamp: new Date(),
+      source: 'Sensor',
+      gasDetected: this.gasStatus === 'GAS_DETECTED',
+      sensorReading: this.gasValue
+    };
+    
+    this.messageCallbacks.forEach(callback => {
+      callback(statusMessage);
+    });
   }
 
   onSensor(callback) {
