@@ -359,12 +359,25 @@ function App() {
         <div className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Messages Panel */}
           <div className="bg-slate-800/50 border-2 border-slate-600 rounded-2xl shadow-2xl p-6">
-            <div className="flex items-center space-x-3 mb-6">
-              <Bell className="w-6 h-6 text-yellow-400" />
-              <h2 className="text-2xl font-bold text-white">Live Messages</h2>
-              <span className="bg-blue-600 text-white text-xs px-3 py-1 rounded-full">
-                {messages.length}
-              </span>
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center space-x-3">
+                <Bell className="w-6 h-6 text-yellow-400" />
+                <h2 className="text-2xl font-bold text-white">Live Messages</h2>
+                <span className="bg-blue-600 text-white text-xs px-3 py-1 rounded-full">
+                  {messages.length}
+                </span>
+              </div>
+              {messages.length > 0 && (
+                <button
+                  onClick={() => {
+                    setMessages([]);
+                    localStorage.removeItem('lpg_messages');
+                  }}
+                  className="bg-red-600 hover:bg-red-700 text-white text-xs px-3 py-1 rounded-lg transition-colors"
+                >
+                  Clear
+                </button>
+              )}
             </div>
             
             <div className="space-y-3 max-h-[400px] overflow-y-auto">
