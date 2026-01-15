@@ -19,6 +19,19 @@ app.use(cors({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Serve static files with correct MIME types
+app.use(express.static('frontend/dist', {
+  setHeaders: (res, path) => {
+    if (path.endsWith('.js')) {
+      res.setHeader('Content-Type', 'application/javascript; charset=utf-8');
+    } else if (path.endsWith('.json')) {
+      res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    } else if (path.endsWith('.css')) {
+      res.setHeader('Content-Type', 'text/css; charset=utf-8');
+    }
+  }
+}));
+
 // ==========================================
 // Health Check
 // ==========================================
@@ -32,6 +45,11 @@ app.get('/api/health', (req, res) => {
 app.use('/api/gas', gasRoutes);
 app.use('/api/control', controlRoutes);
 app.use('/api/subscribe', subscriberRoutes);
+
+// SPA fallback - serve index.html for non-API routes
+app.get('*', (req, res) => {
+  res.sendFile('frontend/dist/index.html', { root: '.' });
+});
 
 // ==========================================
 // Error Handling
