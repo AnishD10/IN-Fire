@@ -11,6 +11,7 @@ export default function Dashboard({ gasData, loading, onAlert }) {
     if (prevValue !== gasData.status) {
       if (gasData.status === 'GAS_DETECTED') {
         onAlert('⚠️ GAS LEAKAGE DETECTED!', 'danger')
+        onAlert('📧 Alert emails being sent to all subscribers...', 'warning')
       } else {
         onAlert('✅ Gas level returned to normal', 'success')
       }

@@ -18,7 +18,7 @@ export default function SubscribeForm({ onSubscribe }) {
       const response = await subscribe(email)
 
       if (response.success) {
-        onSubscribe('✓ Successfully subscribed to alerts!', 'success')
+        onSubscribe(`✓ Welcome email sent to ${email}! Check your inbox.`, 'success')
         setEmail('')
       } else {
         onSubscribe(`✗ ${response.error}`, 'danger')
