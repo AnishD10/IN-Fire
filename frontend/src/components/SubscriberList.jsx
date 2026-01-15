@@ -16,12 +16,17 @@ export default function SubscriberList({ onAlert }) {
   const loadSubscribers = async () => {
     try {
       const response = await getSubscribers()
-      if (response.subscribers) {
+      if (response.subscribers && Array.isArray(response.subscribers)) {
         setSubscribers(response.subscribers)
+      } else if (Array.isArray(response)) {
+        setSubscribers(response)
+      } else {
+        setSubscribers([])
       }
     } catch (error) {
       console.error('Failed to load subscribers:', error)
       onAlert?.('Failed to load subscribers', 'danger')
+      setSubscribers([])
     } finally {
       setLoading(false)
     }

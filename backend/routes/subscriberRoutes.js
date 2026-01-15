@@ -7,7 +7,7 @@ const router = express.Router();
 // ==========================================
 // POST /api/subscribe
 // ==========================================
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const { email } = req.body;
 
@@ -21,7 +21,7 @@ router.post('/', (req, res) => {
     }
 
     // Add subscriber
-    const result = addSubscriber(email);
+    const result = await addSubscriber(email);
     
     if (!result.success) {
       return res.status(400).json(result);
@@ -49,9 +49,9 @@ router.post('/', (req, res) => {
 // ==========================================
 // GET /api/subscribe/list
 // ==========================================
-router.get('/list', (req, res) => {
+router.get('/list', async (req, res) => {
   try {
-    const subscribers = getSubscribers();
+    const subscribers = await getSubscribers();
     res.json({
       success: true,
       count: subscribers.length,
@@ -68,10 +68,10 @@ router.get('/list', (req, res) => {
 // ==========================================
 // DELETE /api/subscribe/:email
 // ==========================================
-router.delete('/:email', (req, res) => {
+router.delete('/:email', async (req, res) => {
   try {
     const { email } = req.params;
-    const result = removeSubscriber(email);
+    const result = await removeSubscriber(email);
 
     if (!result.success) {
       return res.status(404).json(result);
